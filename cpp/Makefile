@@ -1,3 +1,6 @@
+# Generic Makefile
+
+##########################
 #### PROJECT SETTINGS ####
 # The name of the executable to be created
 BIN_NAME := hello
@@ -10,24 +13,37 @@ SRC_PATH = .
 # Space-separated pkg-config libraries used by this project
 LIBS =
 # General compiler flags
-COMPILE_FLAGS = -std=c++11 -Wall -Wextra -g
+COMPILE_FLAGS = \
+ -std=c++11
 # Additional release-specific flags
-RCOMPILE_FLAGS = -D NDEBUG
+RCOMPILE_FLAGS = \
+ -D NDEBUG \
+ -D ndebug \
+ -D release 
 # Additional debug-specific flags
-DCOMPILE_FLAGS = -D DEBUG
+DCOMPILE_FLAGS = \
+ -Wall \
+ -Wextra \
+ -g3 \
+ -O0 \
+ -D DEBUG \
+ -D debug
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)
 # General linker settings
-LINK_FLAGS =
+LINK_FLAGS = 
+ # -L lib-directory 
+ # -l LIBFILE
 # Additional release-specific linker settings
-RLINK_FLAGS =
+RLINK_FLAGS = 
 # Additional debug-specific linker settings
-DLINK_FLAGS =
+DLINK_FLAGS = 
 # Destination directory, like a jail or mounted system
 DESTDIR = /
 # Install path (bin/ is appended automatically)
 INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
+##############################
 
 # Optionally you may move the section above to a separate config.mk file, and
 # uncomment the line below
@@ -119,6 +135,7 @@ else
 		echo `date -u -d @$$st '+%H:%M:%S'`
 endif
 
+#########################
 # Version macros
 # Comment/remove this section to remove versioning
 USE_VERSION := false
@@ -222,3 +239,5 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	$(CMD_PREFIX)$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 	@echo -en "\t Compile time: "
 	@$(END_TIME)
+
+
